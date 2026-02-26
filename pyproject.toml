@@ -8,7 +8,7 @@ version = "0.2.0"
 description = "Official Python SDK for the Biological Sovereignty Protocol"
 readme = "README.md"
 license = { text = "Apache-2.0" }
-authors = [{ name = "Ambrósio Institute", email = "dev@ambrosio.health" }]
+authors = [{ name = "Ambrósio Institute", email = "dev@ambrosioinstitute.org" }]
 keywords = ["bsp", "biological-sovereignty", "longevity", "health-data", "biomarker"]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -19,6 +19,6 @@ classifiers = [
 requires-python = ">=3.10"
 
 [project.urls]
-Homepage = "https://bsp.dev"
+Homepage = "https://biologicalsovereigntyprotocol.com"
 Repository = "https://github.com/Biological-Sovereignty-Protocol/bsp-sdk-python"
-Documentation = "https://bsp.dev/docs/python"
+Documentation = "https://biologicalsovereigntyprotocol.com/docs/python"

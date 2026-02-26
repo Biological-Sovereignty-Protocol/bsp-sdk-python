@@ -1,7 +1,7 @@
 # bsp-sdk — Python SDK for the Biological Sovereignty Protocol
 
 > Official Python SDK for the [Biological Sovereignty Protocol (BSP)](https://github.com/Biological-Sovereignty-Protocol/bsp-spec)
-> Published by the Ambrósio Institute · ambrosio.health · bsp.dev
+> Published by the Ambrósio Institute · ambrosioinstitute.org · biologicalsovereigntyprotocol.com
 
 ## Installation
 
@@ -45,7 +45,7 @@ result = exchange.submit(record, token=consent_token)
 
 ## Documentation
 
-Full documentation: [bsp.dev](https://bsp.dev)
+Full documentation: [biologicalsovereigntyprotocol.com](https://biologicalsovereigntyprotocol.com)
 Protocol specification: [bsp-spec](https://github.com/Biological-Sovereignty-Protocol/bsp-spec)
 
 ## Requirements
