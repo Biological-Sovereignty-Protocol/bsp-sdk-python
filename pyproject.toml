@@ -4,21 +4,49 @@ build-backend = "hatchling.build"
 
 [project]
 name = "bsp-sdk"
-version = "0.2.0"
+version = "1.0.0"
 description = "Official Python SDK for the Biological Sovereignty Protocol"
 readme = "README.md"
 license = { text = "Apache-2.0" }
 authors = [{ name = "Ambrósio Institute", email = "dev@ambrosioinstitute.org" }]
-keywords = ["bsp", "biological-sovereignty", "longevity", "health-data", "biomarker"]
+keywords = ["bsp", "biological-sovereignty", "longevity", "health-data", "biomarker", "arweave"]
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
 ]
 requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.0",
+    "mypy>=1.8",
+    "ruff>=0.3",
+]
 
 [project.urls]
-Homepage = "https://biologicalsovereigntyprotocol.com"
-Repository = "https://github.com/Biological-Sovereignty-Protocol/bsp-sdk-python"
-Documentation = "https://biologicalsovereigntyprotocol.com/docs/python"
+Homepage      = "https://biologicalsovereigntyprotocol.com"
+Repository    = "https://github.com/Biological-Sovereignty-Protocol/bsp-sdk-python"
+Documentation = "https://biologicalsovereigntyprotocol.com/developers/sdk-reference"
+Issues        = "https://github.com/Biological-Sovereignty-Protocol/bsp-sdk-python/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts   = "-v"
+
+[tool.mypy]
+strict          = true
+python_version  = "3.10"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

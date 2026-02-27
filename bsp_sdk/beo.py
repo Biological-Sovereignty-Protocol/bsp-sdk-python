@@ -1,42 +1,79 @@
-"""BEOClient — Create and manage Biological Entity Objects on Arweave."""
+"""
+BEOClient — Create and manage Biological Entity Objects on Arweave.
 
+Example::
+
+    from bsp_sdk import BSPClient
+
+    client = BSPClient(ieo_domain="fleury.bsp", private_key="...", environment="mainnet")
+
+    # Check domain availability
+    available = client.beo.is_available("andre.bsp")
+
+    # Create BEO
+    result = client.beo.create(
+        domain    = "andre.bsp",
+        guardians = [
+            {"name": "Maria", "contact": "maria.bsp", "public_key": "...", "role": "primary"},
+            {"name": "João",  "contact": "joao.bsp",  "public_key": "...", "role": "secondary"},
+        ],
+        threshold = 2,
+    )
+    # ⚠️  Store seed_phrase offline — never digitally
+"""
+
+from __future__ import annotations
 from typing import Optional
-from .types import BEO, Guardian
+from .types import BEO, BSPConfig, RecoveryConfig
 
 
 class BEOClient:
-    """
-    Create and manage Biological Entity Objects.
+    """Create and manage BEOs on Arweave. No approval required."""
 
-    BEO creation is open to anyone. No permission from the Ambrósio Institute
-    or any authority is required.
+    def __init__(self, config: BSPConfig) -> None:
+        self.config = config
 
-    Example:
-        client = BEOClient()
-        beo = client.create(domain="andre.bsp")
-    """
-
-    def create(self, domain: str, guardians: Optional[list[dict]] = None) -> BEO:
+    def create(
+        self,
+        domain:    str,
+        guardians: Optional[list[dict]] = None,
+        threshold: int = 2,
+    ) -> dict:
         """
-        Create a new BEO and register it on Arweave.
-
-        Args:
-            domain: The desired .bsp domain (e.g. "andre.bsp")
-            guardians: Optional list of guardian configurations
+        Create a new BEO. Keys returned ONCE — store immediately.
 
         Returns:
-            BEO: The created Biological Entity Object
+            beo, beo_id, domain, arweave_tx, private_key, seed_phrase, warning
         """
-        raise NotImplementedError("Install bsp-sdk from PyPI when published")
+        if not domain.endswith(".bsp"):
+            raise ValueError(f'domain must end with .bsp — got: "{domain}"')
+        if not self.is_available(domain):
+            raise ValueError(f'Domain "{domain}" is already registered')
+        # Implementation: generate Ed25519 locally, post to BEORegistry on Arweave
+        raise NotImplementedError("Registry connection required")
 
     def resolve(self, domain: str) -> BEO:
-        """Resolve a .bsp domain to its BEO."""
-        raise NotImplementedError("Install bsp-sdk from PyPI when published")
+        """Resolve a .bsp domain to its BEO object."""
+        raise NotImplementedError("Registry connection required")
 
     def get(self, beo_id: str) -> BEO:
-        """Fetch a BEO from Arweave by its ID."""
-        raise NotImplementedError("Install bsp-sdk from PyPI when published")
+        """Get a BEO by its UUID."""
+        raise NotImplementedError("Registry connection required")
 
     def is_available(self, domain: str) -> bool:
         """Check if a .bsp domain is available."""
-        raise NotImplementedError("Install bsp-sdk from PyPI when published")
+        raise NotImplementedError("Registry connection required")
+
+    def lock(self, reason: Optional[str] = None) -> dict:
+        """Lock a BEO — no reads/writes until unlocked."""
+        raise NotImplementedError("Registry connection required")
+
+    def unlock(self) -> dict:
+        """Unlock a previously locked BEO."""
+        raise NotImplementedError("Registry connection required")
+
+    def update_recovery(self, config: RecoveryConfig) -> dict:
+        """Update Social Recovery guardian configuration."""
+        if config.threshold < 1 or config.threshold > len(config.guardians):
+            raise ValueError(f"threshold must be between 1 and {len(config.guardians)}")
+        raise NotImplementedError("Registry connection required")
