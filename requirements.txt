@@ -1,0 +1,7 @@
+# BSP SDK Python — no runtime dependencies (stdlib only)
+# Dev dependencies below (install with: pip install -r requirements.txt)
+
+pytest>=8.0
+pytest-cov>=4.0
+mypy>=1.8
+ruff>=0.3
