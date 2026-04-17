@@ -8,7 +8,7 @@ Example (lab submitting)::
         records       = [blood_test_record, hrv_record],
         consent_token = "tok_...",
     )
-    print(result.arweave_txs)  # permanent IDs on Arweave
+    print(result.aptos_txs)  # permanent tx hashes on Aptos
 
 Example (physician reading)::
 
@@ -37,7 +37,7 @@ _BSP_ERRORS = {
     "IEO_SIGNATURE_INVALID":    "IEO signature verification failed",
     "SCHEMA_VALIDATION_FAILED": "BioRecord schema validation failed",
     "BIOMARKER_CODE_INVALID":   "BSP biomarker code not found in taxonomy",
-    "ARWEAVE_WRITE_FAILED":     "Arweave write failed — retryable",
+    "APTOS_TIMEOUT":            "Aptos transaction timed out — retryable",
     "RATE_LIMIT_EXCEEDED":      "Rate limit exceeded — retryable",
 }
 
@@ -67,7 +67,7 @@ class ExchangeClient:
             raise ValueError("At least one BioRecord is required")
         if len(records) > 100:
             raise ValueError("Maximum 100 records per submission batch")
-        # Implementation: sign with IEO private key, post to Arweave
+        # Implementation: sign with IEO private key, submit via registry API to Aptos
         raise NotImplementedError("Registry connection required")
 
     def read_records(

@@ -55,11 +55,11 @@ class AccessManager:
         expires_in_days: Optional[int] = None,
         reason:          Optional[str] = None,
     ) -> ConsentToken:
-        """Issue a ConsentToken (BEO holder operation). Signed locally, written to Arweave."""
+        """Issue a ConsentToken (BEO holder operation). Signed locally, written to Aptos."""
         raise NotImplementedError("Registry connection required")
 
     def revoke_consent(self, token_id: str) -> dict:
-        """Revoke a token immediately — on-chain effect. Returns {"token_id", "revoked_at", "arweave_tx"}."""
+        """Revoke a token immediately — on-chain effect. Returns {"token_id", "revoked_at", "aptos_tx"}."""
         raise NotImplementedError("Registry connection required")
 
     def revoke_all_from_ieo(self, ieo_domain: str) -> dict:

@@ -41,6 +41,27 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [2.0.0] — 2026-04-17
+
+### Changed — Aptos Migration
+
+- **BREAKING**: Migrated execution layer from AO/Arweave to **Aptos** (Move smart contracts)
+- All `arweave_tx` fields renamed to `aptos_tx` across types (`BEO`, `IEO`, `BioRecord`, `ConsentToken`)
+- `SubmitResult.arweave_txs` renamed to `aptos_txs`
+- `BSPConfig.arweave_node` removed, replaced with `contract_address`, `aptos_network`, and `aptos_node_url`
+- Added `AptosNetwork` type literal (`mainnet`, `testnet`, `devnet`, `local`)
+- Error code `BSP_ARWEAVE_UNAVAILABLE` replaced with `APTOS_TIMEOUT`
+- Updated all docstrings and comments to reference Aptos instead of Arweave
+- Updated `BSPClient.__init__` to accept new Aptos config parameters
+
+### Note
+
+- Arweave references for **data storage** context remain valid (historical)
+- The SDK talks to the `bsp-registry-api`, not directly to the Aptos chain
+- The registry API acts as a relayer (pays gas on behalf of users)
+
+---
+
 ## [Unreleased]
 
 ### Planned

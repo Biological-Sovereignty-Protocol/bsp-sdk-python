@@ -63,7 +63,7 @@ record = (
 
 exchange = ExchangeClient(client.config)
 result = exchange.submit_records([record], token=token)
-print(result.arweave_txs)  # ['abc123...']
+print(result.aptos_txs)  # permanent tx hashes on Aptos
 ```
 
 ---
@@ -83,7 +83,7 @@ beo = BEOClient(config)
 
 | Method | Signature | Description |
 |--------|-----------|-------------|
-| `create` | `(domain, guardians?, recovery_threshold?) -> BEO` | Register a new BEO on-chain |
+| `create` | `(domain, guardians?, recovery_threshold?) -> BEO` | Register a new BEO on Aptos |
 | `resolve` | `(domain: str) -> BEO` | Resolve a `.bsp` domain to its BEO |
 | `get` | `(beo_id: str) -> BEO` | Fetch a BEO by ID |
 | `is_available` | `(domain: str) -> bool` | Check if a domain is unclaimed |
@@ -129,7 +129,7 @@ ieo = IEOBuilder(
 
 | Method | Signature | Description |
 |--------|-----------|-------------|
-| `register` | `() -> dict` | Register the IEO on-chain |
+| `register` | `() -> dict` | Register the IEO on Aptos |
 | `preview` | `() -> dict` | Dry-run — validate without committing |
 
 ---
@@ -192,7 +192,7 @@ exchange = ExchangeClient(config)
 # Submit multiple records
 result = exchange.submit_records([glucose_record, hba1c_record], token=token)
 # result.status == "SUCCESS"
-# result.arweave_txs == ["abc...", "def..."]
+# result.aptos_txs == ["0xabc...", "0xdef..."]
 
 # Read with filters
 from bsp_sdk import ReadFilters
@@ -328,7 +328,7 @@ hba1c = (
 exchange = ExchangeClient(config)
 result = exchange.submit_records([glucose, hba1c], token=token)
 print(f"Submitted: {result.status}")
-print(f"Arweave TXs: {result.arweave_txs}")
+print(f"Aptos TXs: {result.aptos_txs}")
 
 # ── Query ────────────────────────────────────────────────────────────────────
 filters = ReadFilters(categories=["METABOLIC"], limit=10)
@@ -386,7 +386,7 @@ except ConnectionError as e:
 | `BSP_BIOMARKER_UNKNOWN` | No | Code not in BSP taxonomy |
 | `BSP_IEO_SUSPENDED` | No | Institution suspended |
 | `BSP_REGISTRY_TIMEOUT` | Yes | Registry unreachable |
-| `BSP_ARWEAVE_UNAVAILABLE` | Yes | Arweave node down |
+| `APTOS_TIMEOUT` | Yes | Aptos transaction timed out; record is pending |
 
 ---
 
@@ -433,7 +433,9 @@ All config values can be passed to `BSPConfig` directly or loaded from environme
 | `private_key` | `BSP_IEO_PRIVATE_KEY` | required | Ed25519 private key (hex) |
 | `environment` | `BSP_ENVIRONMENT` | `mainnet` | `mainnet`, `testnet`, or `local` |
 | `registry_url` | `BSP_REGISTRY_URL` | auto | Override BSP registry endpoint |
-| `arweave_node` | `BSP_ARWEAVE_NODE` | auto | Override Arweave gateway |
+| `contract_address` | `BSP_CONTRACT_ADDRESS` | auto | Aptos Move contract address |
+| `aptos_network` | `BSP_APTOS_NETWORK` | auto | `mainnet`, `testnet`, `devnet`, or `local` |
+| `aptos_node_url` | `BSP_APTOS_NODE_URL` | auto | Override Aptos fullnode URL |
 | `timeout_s` | `BSP_TIMEOUT_S` | `30.0` | Request timeout in seconds |
 
 ```python

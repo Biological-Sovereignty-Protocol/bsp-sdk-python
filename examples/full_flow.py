@@ -153,7 +153,7 @@ try:
     result = exchange.submit_records([glucose, hba1c, insulin], token=token)
     print(f"  Status      : {result.status}")
     print(f"  Records     : {result.record_ids}")
-    print(f"  Arweave TXs : {result.arweave_txs}")
+    print(f"  Aptos TXs : {result.aptos_txs}")
 
     if result.error:
         err: BSPError = result.error

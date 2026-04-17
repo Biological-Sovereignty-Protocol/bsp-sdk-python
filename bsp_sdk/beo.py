@@ -1,5 +1,5 @@
 """
-BEOClient — Create and manage Biological Entity Objects on Arweave.
+BEOClient — Create and manage Biological Entity Objects on Aptos.
 
 Example::
 
@@ -28,7 +28,7 @@ from .types import BEO, BSPConfig, RecoveryConfig
 
 
 class BEOClient:
-    """Create and manage BEOs on Arweave. No approval required."""
+    """Create and manage BEOs on Aptos. No approval required."""
 
     def __init__(self, config: BSPConfig) -> None:
         self.config = config
@@ -43,13 +43,13 @@ class BEOClient:
         Create a new BEO. Keys returned ONCE — store immediately.
 
         Returns:
-            beo, beo_id, domain, arweave_tx, private_key, seed_phrase, warning
+            beo, beo_id, domain, aptos_tx, private_key, seed_phrase, warning
         """
         if not domain.endswith(".bsp"):
             raise ValueError(f'domain must end with .bsp — got: "{domain}"')
         if not self.is_available(domain):
             raise ValueError(f'Domain "{domain}" is already registered')
-        # Implementation: generate Ed25519 locally, post to BEORegistry on Arweave
+        # Implementation: generate Ed25519 locally, relay to BEORegistry on Aptos via registry API
         raise NotImplementedError("Registry connection required")
 
     def resolve(self, domain: str) -> BEO:

@@ -27,7 +27,7 @@ from typing import Optional
 
 @dataclass
 class IEOBuilder:
-    """Build and register an IEO on Arweave. No approval required."""
+    """Build and register an IEO on Aptos. No approval required."""
 
     domain:       str
     name:         str
@@ -57,14 +57,14 @@ class IEOBuilder:
 
     def register(self) -> dict:
         """
-        Register the IEO on Arweave. Returns keys — store them securely.
+        Register the IEO on Aptos. Returns keys — store them securely.
 
         Returns dict with:
-            ieo_id, domain, arweave_tx, private_key, seed_phrase, status, warning
+            ieo_id, domain, aptos_tx, private_key, seed_phrase, status, warning
 
         CRITICAL: private_key and seed_phrase returned ONCE.
         """
-        # Implementation: generate Ed25519 key pair, post to IEORegistry on Arweave
+        # Implementation: generate Ed25519 key pair, relay to IEORegistry on Aptos via registry API
         raise NotImplementedError("Registry connection required — bsp-registry not yet deployed")
 
     def preview(self) -> dict:

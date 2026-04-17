@@ -4,12 +4,12 @@ build-backend = "hatchling.build"
 
 [project]
 name = "bsp-sdk"
-version = "1.0.0"
+version = "2.0.0"
 description = "Official Python SDK for the Biological Sovereignty Protocol"
 readme = "README.md"
 license = { text = "Apache-2.0" }
 authors = [{ name = "Ambrósio Institute", email = "dev@ambrosioinstitute.org" }]
-keywords = ["bsp", "biological-sovereignty", "longevity", "health-data", "biomarker", "arweave"]
+keywords = ["bsp", "biological-sovereignty", "longevity", "health-data", "biomarker", "aptos", "blockchain"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",

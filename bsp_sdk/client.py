@@ -27,7 +27,7 @@ Example::
         records       = [record],
         consent_token = "tok_...",
     )
-    print(result.arweave_txs)
+    print(result.aptos_txs)
 """
 
 from __future__ import annotations
@@ -46,12 +46,14 @@ class BSPClient:
 
     def __init__(
         self,
-        ieo_domain:   str,
-        private_key:  str,
-        environment:  str = "mainnet",
-        registry_url: Optional[str] = None,
-        arweave_node: Optional[str] = None,
-        timeout_s:    float = 30.0,
+        ieo_domain:       str,
+        private_key:      str,
+        environment:      str = "mainnet",
+        registry_url:     Optional[str] = None,
+        contract_address: Optional[str] = None,
+        aptos_network:    Optional[str] = None,
+        aptos_node_url:   Optional[str] = None,
+        timeout_s:        float = 30.0,
     ) -> None:
         if not ieo_domain.endswith(".bsp"):
             raise ValueError(f'ieo_domain must end with .bsp — got: "{ieo_domain}"')
@@ -65,7 +67,9 @@ class BSPClient:
             private_key=private_key,
             environment=environment,
             registry_url=registry_url,
-            arweave_node=arweave_node,
+            contract_address=contract_address,
+            aptos_network=aptos_network,
+            aptos_node_url=aptos_node_url,
             timeout_s=timeout_s,
         )
         self.beo      = BEOClient(self.config)

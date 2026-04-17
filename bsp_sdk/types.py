@@ -1,4 +1,4 @@
-"""BSP Core Types — v1.0
+"""BSP Core Types — v2.0 (Aptos)
 Full type definitions for the Biological Sovereignty Protocol Python SDK.
 """
 
@@ -54,7 +54,7 @@ class BEO:
     recovery:   RecoveryConfig
     status:     BEOStatus
     locked_at:  Optional[str] = None
-    arweave_tx: Optional[str] = None
+    aptos_tx: Optional[str] = None
 
 
 # ─── IEO ──────────────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ class IEO:
     version:       str
     certification: IEOCertification
     status:        IEOStatus
-    arweave_tx:    Optional[str] = None
+    aptos_tx:    Optional[str] = None
 
 
 # ─── BioRecord ────────────────────────────────────────────────────────────────
@@ -126,7 +126,7 @@ class BioRecord:
     status:       RecordStatus
     supersedes:   Optional[str] = None
     confidence:   Optional[float] = None
-    arweave_tx:   Optional[str] = None
+    aptos_tx:   Optional[str] = None
     data_hash:    Optional[str] = None
 
 
@@ -157,7 +157,7 @@ class ConsentToken:
     version:         str
     expires_at:      Optional[str] = None
     revoked_at:      Optional[str] = None
-    arweave_tx:      Optional[str] = None
+    aptos_tx:      Optional[str] = None
 
     def is_expired(self) -> bool:
         if not self.expires_at:
@@ -186,7 +186,7 @@ class SubmitResult:
     request_id:  str
     status:      BSPStatus
     record_ids:  list[str]
-    arweave_txs: list[str]
+    aptos_txs: list[str]
     timestamp:   str
     error:       Optional[BSPError] = None
 
@@ -215,11 +215,16 @@ class ReadFilters:
 
 # ─── SDK Config ───────────────────────────────────────────────────────────────
 
+AptosNetwork = Literal["mainnet", "testnet", "devnet", "local"]
+
+
 @dataclass
 class BSPConfig:
-    ieo_domain:   str
-    private_key:  str
-    environment:  Literal["mainnet", "testnet", "local"] = "mainnet"
-    registry_url: Optional[str] = None
-    arweave_node: Optional[str] = None
-    timeout_s:    float = 30.0
+    ieo_domain:       str
+    private_key:      str
+    environment:      Literal["mainnet", "testnet", "local"] = "mainnet"
+    registry_url:     Optional[str] = None
+    contract_address: Optional[str] = None
+    aptos_network:    Optional[AptosNetwork] = None
+    aptos_node_url:   Optional[str] = None
+    timeout_s:        float = 30.0
