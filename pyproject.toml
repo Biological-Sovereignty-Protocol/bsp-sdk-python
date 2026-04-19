@@ -32,6 +32,17 @@ dependencies = [
     "cryptography>=41.0",
 ]
 
+# Security notice — ecdsa transitive dependency.
+# BSP SDK does NOT use ecdsa directly (signing = Ed25519 via PyNaCl).
+# aptos-sdk==0.11.0 hard-pins ecdsa==0.19.1.
+#   - CVE-2026-33936 (medium) fixed in 0.19.2.
+#   - CVE-2024-23342 (high, Minerva timing on P-256) — no upstream fix.
+# We override at resolver level (uv) to pull 0.19.2. Pip users should add
+# `--constraint constraints.txt` or upgrade aptos-sdk when a patched release
+# ships. See SECURITY.md for details.
+[tool.uv]
+override-dependencies = ["ecdsa>=0.19.2"]
+
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",

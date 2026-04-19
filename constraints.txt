@@ -1,0 +1,13 @@
+# BSP SDK Python — Security constraints file.
+#
+# Usage (pip):
+#   pip install -e . -c constraints.txt
+#
+# Why:
+#   aptos-sdk hard-pins ecdsa==0.19.1, which has two open advisories:
+#     - CVE-2026-33936 (medium, DoS via DER length) — fixed in 0.19.2
+#     - CVE-2024-23342 (high, Minerva timing on P-256) — no upstream fix
+#   BSP SDK does NOT use ecdsa directly (signing = Ed25519 via PyNaCl).
+#   Override pulls 0.19.2 to close the medium. Remove when aptos-sdk bumps.
+
+ecdsa>=0.19.2
