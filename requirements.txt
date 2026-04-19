@@ -1,6 +1,10 @@
-# BSP SDK Python — no runtime dependencies (stdlib only)
-# Dev dependencies below (install with: pip install -r requirements.txt)
+# BSP SDK Python — Runtime dependencies
+pynacl>=1.5.0
+requests>=2.31.0
+pydantic>=2.0
+cryptography>=41.0
 
+# Dev dependencies (install with: pip install -r requirements.txt)
 pytest>=8.0
 pytest-cov>=4.0
 mypy>=1.8

@@ -25,6 +25,8 @@ from .biorecord import BioRecordBuilder
 from .taxonomy import TaxonomyResolver
 from .access import AccessManager
 from .exchange import ExchangeClient
+from .crypto import CryptoUtils, KeyPair
+from .http_client import HttpClient, BSPApiError
 from .types import (
     # Config
     BSPConfig,
@@ -47,6 +49,8 @@ __all__ = [
     "BSPClient", "BEOClient", "IEOBuilder",
     "BioRecordBuilder", "TaxonomyResolver",
     "AccessManager", "ExchangeClient",
+    # Crypto & HTTP
+    "CryptoUtils", "KeyPair", "HttpClient", "BSPApiError",
     # Config
     "BSPConfig",
     # BEO types

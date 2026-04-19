@@ -25,13 +25,18 @@ Example::
 from __future__ import annotations
 from typing import Optional
 from .types import BEO, BSPConfig, RecoveryConfig
+from .http_client import HttpClient, BSPApiError
 
 
 class BEOClient:
     """Create and manage BEOs on Aptos. No approval required."""
 
-    def __init__(self, config: BSPConfig) -> None:
+    def __init__(self, config: BSPConfig, http: Optional[HttpClient] = None) -> None:
         self.config = config
+        self.http = http or HttpClient(
+            config.registry_url or HttpClient.default_base_url(config.environment),
+            timeout_s=config.timeout_s,
+        )
 
     def create(
         self,
@@ -62,7 +67,13 @@ class BEOClient:
 
     def is_available(self, domain: str) -> bool:
         """Check if a .bsp domain is available."""
-        raise NotImplementedError("Registry connection required")
+        try:
+            data = self.http.get(f"/v1/beo/resolve/{domain}")
+            return not bool(data.get("exists", True)) if isinstance(data, dict) else False
+        except BSPApiError as exc:
+            if exc.status_code == 404:
+                return True
+            raise
 
     def lock(self, reason: Optional[str] = None) -> dict:
         """Lock a BEO — no reads/writes until unlocked."""

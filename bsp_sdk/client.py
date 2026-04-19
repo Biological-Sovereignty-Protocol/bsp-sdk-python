@@ -39,6 +39,7 @@ from .biorecord import BioRecordBuilder
 from .taxonomy import TaxonomyResolver
 from .access import AccessManager
 from .exchange import ExchangeClient
+from .http_client import HttpClient
 
 
 class BSPClient:
@@ -66,15 +67,16 @@ class BSPClient:
             ieo_domain=ieo_domain,
             private_key=private_key,
             environment=environment,
-            registry_url=registry_url,
+            registry_url=registry_url or HttpClient.default_base_url(environment),
             contract_address=contract_address,
             aptos_network=aptos_network,
             aptos_node_url=aptos_node_url,
             timeout_s=timeout_s,
         )
-        self.beo      = BEOClient(self.config)
-        self.access   = AccessManager(self.config)
-        self._exchange = ExchangeClient(self.config)
+        self.http = HttpClient(self.config.registry_url, timeout_s=timeout_s)
+        self.beo      = BEOClient(self.config, http=self.http)
+        self.access   = AccessManager(self.config, http=self.http)
+        self._exchange = ExchangeClient(self.config, http=self.http)
 
     def record(self, beo_domain: str) -> BioRecordBuilder:
         """Create a BioRecordBuilder pre-filled with this IEO's domain."""

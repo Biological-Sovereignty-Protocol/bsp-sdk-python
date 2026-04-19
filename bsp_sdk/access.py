@@ -26,13 +26,18 @@ Example (lab verifying consent before submitting)::
 from __future__ import annotations
 from typing import Optional
 from .types import BSPConfig, ConsentToken, BSPIntent
+from .http_client import HttpClient
 
 
 class AccessManager:
     """Manage ConsentTokens — issue, verify, revoke."""
 
-    def __init__(self, config: BSPConfig) -> None:
+    def __init__(self, config: BSPConfig, http: Optional[HttpClient] = None) -> None:
         self.config = config
+        self.http = http or HttpClient(
+            config.registry_url or HttpClient.default_base_url(config.environment),
+            timeout_s=config.timeout_s,
+        )
 
     def verify_consent(
         self,

@@ -26,6 +26,7 @@ Example (physician reading)::
 from __future__ import annotations
 from typing import Optional
 from .types import BSPConfig, BioRecord, ReadResult, SubmitResult, ReadFilters
+from .http_client import HttpClient
 
 
 _BSP_ERRORS = {
@@ -45,8 +46,12 @@ _BSP_ERRORS = {
 class ExchangeClient:
     """Submit and read biological data — all operations require ConsentToken."""
 
-    def __init__(self, config: BSPConfig) -> None:
+    def __init__(self, config: BSPConfig, http: Optional[HttpClient] = None) -> None:
         self.config = config
+        self.http = http or HttpClient(
+            config.registry_url or HttpClient.default_base_url(config.environment),
+            timeout_s=config.timeout_s,
+        )
 
     def submit_records(
         self,
