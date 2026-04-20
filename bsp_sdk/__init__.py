@@ -18,6 +18,19 @@ Quick start::
     )
 """
 
+import importlib.metadata, warnings
+
+try:
+    _ecdsa_ver = tuple(int(x) for x in importlib.metadata.version("ecdsa").split(".")[:2])
+    if _ecdsa_ver < (0, 19):
+        warnings.warn(
+            "ecdsa < 0.19 is vulnerable to CVE-2024-23342. Run: pip install 'ecdsa>=0.19'",
+            RuntimeWarning,
+            stacklevel=1,
+        )
+except importlib.metadata.PackageNotFoundError:
+    pass
+
 from .client import BSPClient
 from .beo import BEOClient
 from .ieo import IEOBuilder
