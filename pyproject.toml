@@ -50,6 +50,20 @@ dev = [
     "mypy>=1.8",
     "ruff>=0.3",
 ]
+docs = [
+    "sphinx>=7.0",
+    "sphinx-rtd-theme>=2.0",
+]
+
+[tool.hatch.envs.docs]
+dependencies = [
+    "sphinx>=7.0",
+    "sphinx-rtd-theme>=2.0",
+]
+
+[tool.hatch.envs.docs.scripts]
+build = "sphinx-build docs docs/_build"
+clean = "rm -rf docs/_build docs/_autosummary"
 
 [project.urls]
 Homepage      = "https://biologicalsovereigntyprotocol.com"
