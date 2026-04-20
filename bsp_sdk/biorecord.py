@@ -20,6 +20,7 @@ Example::
 
 from __future__ import annotations
 import uuid
+from datetime import datetime, timezone
 from typing import Optional, Union
 from .types import BioRecord, BioLevel, RangeObject, SourceMeta, RecordStatus
 from .taxonomy import TaxonomyResolver
@@ -71,6 +72,15 @@ class BioRecordBuilder:
         return self
 
     def set_collection_time(self, iso8601: str) -> "BioRecordBuilder":
+        """Validate that iso8601 is a parseable ISO 8601 datetime string."""
+        # Normalise trailing 'Z' to '+00:00' so fromisoformat() accepts it on Python < 3.11
+        normalized = iso8601.replace("Z", "+00:00") if iso8601.endswith("Z") else iso8601
+        try:
+            datetime.fromisoformat(normalized)
+        except (ValueError, TypeError) as exc:
+            raise ValueError(
+                f'collection_time must be a valid ISO 8601 datetime string — got: "{iso8601}"'
+            ) from exc
         self._collected_at = iso8601
         return self
 
@@ -125,7 +135,6 @@ class BioRecordBuilder:
         if missing:
             raise ValueError(f'BioRecord missing required fields: {", ".join(missing)}')
 
-        from datetime import datetime, timezone
         now = datetime.now(tz=timezone.utc).isoformat().replace("+00:00", "Z")
 
         source = SourceMeta(
