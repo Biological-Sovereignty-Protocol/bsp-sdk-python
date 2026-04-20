@@ -11,3 +11,5 @@ build/
 venv/
 .pytest_cache/
 .mypy_cache/
+docs/_build/
+docs/_autosummary/
