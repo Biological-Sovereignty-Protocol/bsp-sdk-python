@@ -7,6 +7,21 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- **`BEOClient.destroy(beo_id, reason=None)`** — TS SDK parity for
+  LGPD Art. 18 / GDPR Art. 17 right-to-erasure. Signs a canonical payload
+  (`{function: "destroyBEO", beoId, nonce, timestamp_secs}`), POSTs to
+  `/api/relayer/beo/destroy`, and returns `{destroyed_at, aptos_tx}`.
+- Wire-format alignment: sends hex `nonce` and integer `timestamp_secs`
+  (matches Registry API v2).
+- 11 new tests covering happy path, signature verification, error paths,
+  and u64 id edge cases.
+
+---
+
 ## [2.1.0] — 2026-04-20
 
 ### Added
