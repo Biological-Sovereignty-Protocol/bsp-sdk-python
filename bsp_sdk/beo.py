@@ -120,6 +120,34 @@ class BEOClient:
             raise ValueError(f"threshold must be between 1 and {len(config.guardians)}")
         raise NotImplementedError("Registry connection required")
 
+    def list_beos(self, limit: int = 20, offset: int = 0) -> list:
+        """List BEOs accessible to the configured IEO.
+
+        Makes a GET request to ``/api/beo?limit=N&offset=N`` and returns the
+        list of BEO objects from the response.
+
+        :param limit:  Maximum number of BEOs to return (default: 20).
+        :param offset: Number of records to skip for pagination (default: 0).
+        :returns:      List of BEO dicts as returned by the registry API.
+        :raises BSPApiError: Non-2xx response from the registry API.
+
+        Example::
+
+            client = BSPClient(ieo_domain="lab.bsp", private_key="...", environment="mainnet")
+            beos = client.beo.list_beos(limit=50, offset=0)
+            for beo in beos:
+                print(beo["beo_id"], beo["domain"])
+        """
+        data = self.http.get(f"/api/beo?limit={limit}&offset={offset}")
+        if isinstance(data, list):
+            return data
+        # Some registry responses wrap the list in a 'beos' or 'items' key
+        if isinstance(data, dict):
+            for key in ("beos", "items", "results", "data"):
+                if isinstance(data.get(key), list):
+                    return data[key]
+        return []
+
     def destroy(
         self,
         beo_id: BeoId,

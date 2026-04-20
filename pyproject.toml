@@ -11,6 +11,7 @@ license = { text = "Apache-2.0" }
 authors = [{ name = "Ambrósio Institute", email = "dev@ambrosioinstitute.org" }]
 keywords = ["bsp", "biological-sovereignty", "longevity", "health-data", "biomarker", "aptos", "blockchain"]
 classifiers = [
+    "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",

@@ -89,7 +89,25 @@ beo = BEOClient(config)
 | `is_available` | `(domain: str) -> bool` | Check if a domain is unclaimed |
 | `lock` | `(reason?) -> dict` | Lock a BEO against new writes |
 | `unlock` | `() -> dict` | Unlock a previously locked BEO |
+| `list_beos` | `(limit=20, offset=0) -> list` | List BEOs accessible to the configured IEO |
+| `destroy` | `(beo_id: str \| int, reason?) -> dict` | Permanently destroy a BEO (LGPD/GDPR erasure) |
 | `update_recovery` | `(config: RecoveryConfig) -> dict` | Update guardian recovery settings |
+
+```python
+# List BEOs accessible to the configured IEO
+beos = beo_client.list_beos(limit=50, offset=0)
+for b in beos:
+    print(b["beo_id"], b["domain"])
+
+# Permanently destroy a BEO (LGPD Art. 18 / GDPR Art. 17 — right to erasure)
+# WARNING: irreversible. Nullifies key, revokes all ConsentTokens, releases domain.
+result = beo_client.destroy(
+    beo_id=42,                         # accepts int or decimal string
+    reason="user_requested_deletion",
+)
+print(result["destroyed_at"])
+print(result["aptos_tx"])
+```
 
 ```python
 # Create with guardians
