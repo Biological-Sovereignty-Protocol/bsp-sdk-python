@@ -45,6 +45,8 @@ from .types import (
 __version__ = "2.1.0"
 
 __all__ = [
+    # Package metadata
+    "__version__",
     # Clients
     "BSPClient", "BEOClient", "IEOBuilder",
     "BioRecordBuilder", "TaxonomyResolver",
