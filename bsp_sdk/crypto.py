@@ -114,13 +114,21 @@ class CryptoUtils:
         )
 
     @staticmethod
-    def _stringify_deterministic(obj: dict[str, Any]) -> str:
-        """Sort object keys recursively and serialize with no whitespace.
+    def canonical_stringify(obj: Any) -> str:
+        """Canonical JSON — public for cross-SDK parity with TypeScript SDK.
 
-        Must match the JS implementation (`JSON.stringify(sortedObj)`).
+        Mirrors ``CryptoUtils.canonicalStringify`` in the TS SDK: recursive
+        key sort + compact separators + ensure_ascii=False so UTF-8 strings
+        pass through verbatim. Both SDKs must produce byte-identical output
+        for the same input.
         """
         sorted_obj = CryptoUtils._sort_object_keys(obj)
         return json.dumps(sorted_obj, separators=(",", ":"), ensure_ascii=False)
+
+    @staticmethod
+    def _stringify_deterministic(obj: dict[str, Any]) -> str:
+        """Alias kept for backward compatibility — delegates to canonical_stringify."""
+        return CryptoUtils.canonical_stringify(obj)
 
     @staticmethod
     def _sort_object_keys(obj: Any) -> Any:
